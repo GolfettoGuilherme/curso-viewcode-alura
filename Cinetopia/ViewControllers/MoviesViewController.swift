@@ -43,6 +43,11 @@ class MoviesViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
+    
     private func fetchMovies() async {
         do {
             movies = try await movieService.getMovies()
