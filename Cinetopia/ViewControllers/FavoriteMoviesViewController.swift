@@ -44,6 +44,26 @@ class FavoriteMoviesViewController: UIViewController {
     
 }
 
+extension FavoriteMoviesViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteMovieCollectionViewCell", for: indexPath) as? FavoriteMovieCollectionViewCell else {
+            fatalError("error to create FavoriteMovieCollectionViewCell")
+        }
+        
+        let currentMovie = movies[indexPath.item]
+        cell.setupView(currentMovie)
+        
+        return cell
+    }
+    
+    
+}
+
 #Preview {
     FavoriteMoviesViewController()
 }
