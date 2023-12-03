@@ -28,6 +28,17 @@ class FavoriteMovieViewController: UIViewController {
         return imageView
     }()
     
+    private lazy var movieTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 18.0, weight: .medium)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 0
+            
+        return label
+    }()
+    
     // MARK: - View life cycle
     
     override func viewDidLoad() {
@@ -50,11 +61,18 @@ class FavoriteMovieViewController: UIViewController {
         moviePosterImageView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor).isActive = true
         moviePosterImageView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
         moviePosterImageView.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        
+        mainView.addSubview(movieTitleLabel)
+        movieTitleLabel.topAnchor.constraint(equalTo: moviePosterImageView.bottomAnchor, constant: 12).isActive = true
+        movieTitleLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor).isActive = true
+        movieTitleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
     }
     
     func setupView(_ movie: Movie) {
         let url = URL(string: movie.image)
         moviePosterImageView.kf.setImage(with: url)
+        
+        movieTitleLabel.text = movie.title
     }
 }
 
