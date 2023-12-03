@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		183D0FFC2B123BC50094A808 /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183D0FFB2B123BC50094A808 /* MovieManager.swift */; };
 		18EBC44D2B10E98D00335807 /* FavoriteMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBC44C2B10E98D00335807 /* FavoriteMoviesViewController.swift */; };
 		18EBC4532B11248000335807 /* FavoriteMovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBC4522B11248000335807 /* FavoriteMovieCollectionViewCell.swift */; };
 		18EBC4572B11387E00335807 /* FavoriteCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBC4562B11387E00335807 /* FavoriteCollectionReusableView.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		183D0FFB2B123BC50094A808 /* MovieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
 		18EBC44C2B10E98D00335807 /* FavoriteMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesViewController.swift; sourceTree = "<group>"; };
 		18EBC4522B11248000335807 /* FavoriteMovieCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteMovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		18EBC4562B11387E00335807 /* FavoriteCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				48AE715C2AF1963A002E4E8A /* Movie.swift */,
+				183D0FFB2B123BC50094A808 /* MovieManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				48AE71602AF1976B002E4E8A /* MovieTableViewCell.swift in Sources */,
 				48AE71622AF199B4002E4E8A /* MovieDetailsViewController.swift in Sources */,
 				480C2CDE2AF089A900E8C875 /* SceneDelegate.swift in Sources */,
+				183D0FFC2B123BC50094A808 /* MovieManager.swift in Sources */,
 				480C2CF02AF08E6300E8C875 /* MoviesViewController.swift in Sources */,
 				18EBC45B2B11447500335807 /* TabBarController.swift in Sources */,
 				48B7D9E22AF2E725001EBED0 /* MovieService.swift in Sources */,
