@@ -62,6 +62,15 @@ class MovieTableViewCell: UITableViewCell {
         moviePosterImageView.kf.setImage(with: url)
         movieTitleLabel.text = movie.title
         movieReleaseDateLabel.text = "Lançamento: \(movie.releaseDate)"
+        
+        let heart = UIImage(systemName: "heart")?.withTintColor(.buttonBackground, renderingMode: .alwaysOriginal)
+        let heartFill = UIImage(systemName: "heart.fill")?.withTintColor(.buttonBackground, renderingMode: .alwaysOriginal)
+        
+        if movie.isSelected {
+            favoriteButton.setImage(heartFill, for: .normal)
+        } else {
+            favoriteButton.setImage(heart, for: .normal)
+        }
     }
     
     private func addSubviews() {
