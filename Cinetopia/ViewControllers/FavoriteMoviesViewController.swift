@@ -34,6 +34,11 @@ class FavoriteMoviesViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.reloadData()
+    }
+    
     // MARK: - Class methods
     
     private func setupConstraints() {
@@ -51,7 +56,7 @@ class FavoriteMoviesViewController: UIViewController {
 extension FavoriteMoviesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return MovieManager.shared.favoritesMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -59,8 +64,9 @@ extension FavoriteMoviesViewController: UICollectionViewDataSource {
             fatalError("error to create FavoriteMovieCollectionViewCell")
         }
         
-//        let currentMovie = movies[indexPath.item]
-//        cell.setupView(currentMovie)
+        let currentMovie = MovieManager.shared.favoritesMovies[indexPath.item]
+        cell.setupView(currentMovie)
+        cell.delegate = self
         
         return cell
     }
@@ -87,6 +93,12 @@ extension FavoriteMoviesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 50)
+    }
+}
+
+extension FavoriteMoviesViewController: FavoriteMovieCollectionViewCellDelegate {
+    func didSelectFavoriteButton(_ sender: UIButton) {
+        print("did tap favorite button in view controller")
     }
 }
 
