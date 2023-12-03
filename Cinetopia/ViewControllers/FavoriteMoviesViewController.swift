@@ -65,7 +65,17 @@ extension FavoriteMoviesViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        <#code#>
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FavoriteCollectionReusableView", for: indexPath) as? FavoriteCollectionReusableView else {
+                fatalError("error to create collectionview header")
+            }
+            
+            headerView.setupTitle("Meus filmes favoritos")
+            
+            return headerView
+        }
+        
+        return UICollectionReusableView()
     }
 }
 
