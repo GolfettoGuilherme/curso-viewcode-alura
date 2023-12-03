@@ -7,17 +7,9 @@
 
 import UIKit
 
-class FavoriteMovieViewController: UIViewController {
-    
-    let movie = Movie(id: 1, title: "Avatar", image: "https://github.com/alura-cursos/movie-api/blob/main/images/avatar.jpg?raw=true", synopsis: "No exuberante mundo alienígena de Pandora vivem os Na'vi, seres que parecem ser primitivos, mas são altamente evoluídos. Como o ambiente do planeta é tóxico, foram criados os avatares, corpos biológicos controlados pela mente humana que se movimentam livremente em Pandora. Jake Sully, um ex-fuzileiro naval paralítico, volta a andar através de um avatar e se apaixona por uma Na'vi. Esta paixão leva Jake a lutar pela sobrevivência de Pandora.", rate: 9.4, releaseDate: "18/12/2009")
+class FavoriteMovieViewController: UICollectionViewCell {
     
     // MARK: - UI Components
-    
-    private let mainView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-    }()
     
     private lazy var moviePosterImageView: UIImageView = {
         let imageView = UIImageView()
@@ -35,7 +27,7 @@ class FavoriteMovieViewController: UIViewController {
         label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 0
-            
+        
         return label
     }()
     
@@ -45,43 +37,41 @@ class FavoriteMovieViewController: UIViewController {
         let iconImage = UIImage(systemName: "heart.fill")?.withTintColor(.buttonBackground, renderingMode: .alwaysOriginal)
         button.setImage(iconImage, for: .normal)
         button.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
-            
+        
         return button
     }()
     
     // MARK: - View life cycle
-    
-    override func viewDidLoad() {
-        view.backgroundColor = .lightGray
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .lightGray
         setupConstraints()
-        setupView(movie)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Class methods
     
     private func setupConstraints() {
-        view.addSubview(mainView)
-        mainView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        mainView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        mainView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        mainView.widthAnchor.constraint(equalToConstant: 115).isActive = true
-        
-        mainView.addSubview(moviePosterImageView)
-        moviePosterImageView.topAnchor.constraint(equalTo: mainView.topAnchor).isActive = true
-        moviePosterImageView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor).isActive = true
-        moviePosterImageView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
+        addSubview(moviePosterImageView)
+        moviePosterImageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        moviePosterImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        moviePosterImageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         moviePosterImageView.heightAnchor.constraint(equalToConstant: 140).isActive = true
         
-        mainView.addSubview(movieTitleLabel)
+        addSubview(movieTitleLabel)
         movieTitleLabel.topAnchor.constraint(equalTo: moviePosterImageView.bottomAnchor, constant: 12).isActive = true
-        movieTitleLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor).isActive = true
-        movieTitleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
+        movieTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        movieTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
-        mainView.addSubview(favoriteButton)
+        addSubview(favoriteButton)
         favoriteButton.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 7).isActive = true
         favoriteButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         favoriteButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        favoriteButton.centerXAnchor.constraint(equalTo: mainView.centerXAnchor).isActive = true
+        favoriteButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
     func setupView(_ movie: Movie) {
@@ -91,14 +81,10 @@ class FavoriteMovieViewController: UIViewController {
         movieTitleLabel.text = movie.title
     }
     
-    // MARK: - IBActions
+    // MARK: - IBAction
     
     @objc
     func didTapFavoriteButton(_ sender: UIButton) {
         print("did tap favorite button")
     }
-}
-
-#Preview {
-    FavoriteMovieViewController()
 }
