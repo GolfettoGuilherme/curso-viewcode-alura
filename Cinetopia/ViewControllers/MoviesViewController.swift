@@ -95,6 +95,7 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as? MovieTableViewCell {
             let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
             cell.configureCell(movie: movie)
+            cell.delegate = self
             cell.selectionStyle = .none
             return cell
         }
@@ -124,5 +125,23 @@ extension MoviesViewController: UISearchBarDelegate {
             isSearchActive = true
         }
         tableView.reloadData()
+    }
+}
+
+extension MoviesViewController: MovieTableViewCellDelegate {
+    func didSelectFavoriteButton(sender: UIButton) {
+        guard let cell = sender.superview?.superview as? MovieTableViewCell else {
+            return
+        }
+        
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        
+        let selectedMovie = movies[indexPath.row]
+        selectedMovie.changeSelectionStatus()
+        
+        MovieManager.shared.add(selectedMovie)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

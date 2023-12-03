@@ -50,6 +50,8 @@ class MovieTableViewCell: UITableViewCell {
         return button
     }()
     
+    weak var delegate: MovieTableViewCellDelegate?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
@@ -120,7 +122,7 @@ class MovieTableViewCell: UITableViewCell {
     
     @objc
     func didTapFavoriteButton(sender: UIButton) {
-        print("did tap favorite button")
+        delegate?.didSelectFavoriteButton(sender: sender)
     }
     
 }
