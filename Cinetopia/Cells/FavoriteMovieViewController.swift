@@ -39,6 +39,16 @@ class FavoriteMovieViewController: UIViewController {
         return label
     }()
     
+    private lazy var favoriteButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let iconImage = UIImage(systemName: "heart.fill")?.withTintColor(.buttonBackground, renderingMode: .alwaysOriginal)
+        button.setImage(iconImage, for: .normal)
+        button.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
+            
+        return button
+    }()
+    
     // MARK: - View life cycle
     
     override func viewDidLoad() {
@@ -66,6 +76,12 @@ class FavoriteMovieViewController: UIViewController {
         movieTitleLabel.topAnchor.constraint(equalTo: moviePosterImageView.bottomAnchor, constant: 12).isActive = true
         movieTitleLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor).isActive = true
         movieTitleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
+        
+        mainView.addSubview(favoriteButton)
+        favoriteButton.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 7).isActive = true
+        favoriteButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        favoriteButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        favoriteButton.centerXAnchor.constraint(equalTo: mainView.centerXAnchor).isActive = true
     }
     
     func setupView(_ movie: Movie) {
@@ -73,6 +89,13 @@ class FavoriteMovieViewController: UIViewController {
         moviePosterImageView.kf.setImage(with: url)
         
         movieTitleLabel.text = movie.title
+    }
+    
+    // MARK: - IBActions
+    
+    @objc
+    func didTapFavoriteButton(_ sender: UIButton) {
+        print("did tap favorite button")
     }
 }
 
