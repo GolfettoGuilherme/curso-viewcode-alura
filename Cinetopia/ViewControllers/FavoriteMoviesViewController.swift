@@ -16,6 +16,8 @@ class FavoriteMoviesViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .yellow
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(FavoriteMovieCollectionViewCell.self, forCellWithReuseIdentifier: "FavoriteMovieCollectionViewCell")
+        collectionView.dataSource = self
         
         return collectionView
     }()

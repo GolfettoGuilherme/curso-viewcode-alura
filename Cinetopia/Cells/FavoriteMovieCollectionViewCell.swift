@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoriteMovieViewController: UICollectionViewCell {
+class FavoriteMovieCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
