@@ -32,6 +32,10 @@ class MoviesViewController: UIViewController {
         return searchBar
     }()
     
+    //-----------------------------------------------------------------------
+    // MARK: - view lifecycle
+    //-----------------------------------------------------------------------
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
@@ -45,8 +49,13 @@ class MoviesViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tableView.reloadData()
+        tableView.reloadData() //atualizar a tableview sempre que a tela reaparecer
     }
+    
+    //-----------------------------------------------------------------------
+    // MARK: - private methods
+    //-----------------------------------------------------------------------
+
     
     private func fetchMovies() async {
         do {
@@ -100,7 +109,7 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as? MovieTableViewCell {
             let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
             cell.configureCell(movie: movie)
-            cell.delegate = self
+            cell.delegate = self //diz que o viewcontroller vai implementar o protocolo q liga ele a celula e sabe responder ao evento de click dela
             cell.selectionStyle = .none
             return cell
         }
@@ -134,11 +143,15 @@ extension MoviesViewController: UISearchBarDelegate {
 }
 
 extension MoviesViewController: MovieTableViewCellDelegate {
+    
+    //evento que recebe quando acontece o click
     func didSelectFavoriteButton(sender: UIButton) {
+        //a celula que sofreu o click
         guard let cell = sender.superview?.superview as? MovieTableViewCell else {
             return
         }
         
+        //para pegar o indexpath necessário
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
@@ -146,7 +159,7 @@ extension MoviesViewController: MovieTableViewCellDelegate {
         let selectedMovie = movies[indexPath.row]
         selectedMovie.changeSelectionStatus()
         
-        MovieManager.shared.add(selectedMovie)
+        MovieManager.shared.add(selectedMovie) //adiciona pelo singleton na memoria
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

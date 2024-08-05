@@ -2,37 +2,43 @@
 //  TabBarController.swift
 //  Cinetopia
 //
-//  Created by ALURA on 24/11/23.
+//  Created by Guilherme Golfetto on 05/08/24.
 //
 
 import UIKit
 
+//esse controller cuida da barra inferior do app, não precisa de nada alem desse metodo
 class TabBarController: UITabBarController {
-    
-    // MARK: - View life cycle
+
+    //-----------------------------------------------------------------------
+    // MARK: - View lifecycle
+    //-----------------------------------------------------------------------
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupTabBarController()
         self.navigationItem.setHidesBackButton(true, animated: true)
     }
     
+    //-----------------------------------------------------------------------
     // MARK: - Class methods
-    
+    //-----------------------------------------------------------------------
+
     private func setupTabBarController() {
-        let home = UINavigationController(rootViewController: MoviesViewController())
+        let homeVC = UINavigationController(rootViewController: MoviesViewController())
         let symbolConfiguration = UIImage.SymbolConfiguration(scale: .medium)
         
         let homeSymbol = UIImage(systemName: "film", withConfiguration: symbolConfiguration)
-        home.tabBarItem.image = homeSymbol
-        home.tabBarItem.title = "Filmes populares"
+        homeVC.tabBarItem.image = homeSymbol
+        homeVC.tabBarItem.title = "Filmes populares"
         
-        let favorites = UINavigationController(rootViewController: FavoriteMoviesViewController())
+        let favoritesVC = UINavigationController(rootViewController: FavoriteMoviesViewController())
         
         let heartSymbol = UIImage(systemName: "heart", withConfiguration: symbolConfiguration)
-        favorites.tabBarItem.image = heartSymbol
-        favorites.tabBarItem.title = "Favoritos"
+        favoritesVC.tabBarItem.image = heartSymbol
+        favoritesVC.tabBarItem.title = "Favoritos"
         
-        self.setViewControllers([home, favorites], animated: true)
+        self.setViewControllers([homeVC, favoritesVC], animated: true)
     }
 }

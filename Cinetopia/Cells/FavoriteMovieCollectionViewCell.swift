@@ -1,8 +1,8 @@
 //
-//  FavoriteMovieViewController.swift
+//  FavoriteMovieCollectionViewCell.swift
 //  Cinetopia
 //
-//  Created by ALURA on 24/11/23.
+//  Created by Guilherme Golfetto on 05/08/24.
 //
 
 import UIKit
@@ -13,7 +13,9 @@ protocol FavoriteMovieCollectionViewCellDelegate: AnyObject {
 
 class FavoriteMovieCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - UI Components
+    //-----------------------------------------------------------------------
+    // MARK: - Subviews
+    //-----------------------------------------------------------------------
     
     private lazy var moviePosterImageView: UIImageView = {
         let imageView = UIImageView()
@@ -31,36 +33,46 @@ class FavoriteMovieCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 1
-        
         return label
     }()
     
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        
         let iconImage = UIImage(systemName: "heart.fill")?.withTintColor(.buttonBackground, renderingMode: .alwaysOriginal)
+        
         button.setImage(iconImage, for: .normal)
         button.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
-        
         return button
     }()
     
+    //-----------------------------------------------------------------------
+    // MARK: - Delegate
+    //-----------------------------------------------------------------------
+
     weak var delegate: FavoriteMovieCollectionViewCellDelegate?
     
-    // MARK: - View life cycle
+    //-----------------------------------------------------------------------
+    // MARK: - View Lifecycle
+    //-----------------------------------------------------------------------
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupConstraints()
+
+        setupContraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Class methods
-    
-    private func setupConstraints() {
+    //-----------------------------------------------------------------------
+    // MARK: - Private methods
+    //-----------------------------------------------------------------------
+
+    private func setupContraints() {
+        
         addSubview(moviePosterImageView)
         moviePosterImageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         moviePosterImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
@@ -79,17 +91,22 @@ class FavoriteMovieCollectionViewCell: UICollectionViewCell {
         favoriteButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
+    //-----------------------------------------------------------------------
+    // MARK: - Public methods
+    //-----------------------------------------------------------------------
+    
     func setupView(_ movie: Movie) {
         let url = URL(string: movie.image)
         moviePosterImageView.kf.setImage(with: url)
-        
         movieTitleLabel.text = movie.title
     }
     
+    //-----------------------------------------------------------------------
     // MARK: - IBAction
-    
-    @objc
-    func didTapFavoriteButton(_ sender: UIButton) {
+    //-----------------------------------------------------------------------
+
+    @objc func didTapFavoriteButton(_ sender: UIButton) {
         delegate?.didSelectFavoriteButton(sender)
     }
 }
+

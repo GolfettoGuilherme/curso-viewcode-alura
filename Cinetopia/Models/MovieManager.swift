@@ -2,23 +2,29 @@
 //  MovieManager.swift
 //  Cinetopia
 //
-//  Created by ALURA on 25/11/23.
+//  Created by Guilherme Golfetto on 05/08/24.
 //
 
 import Foundation
 
 class MovieManager {
     
-    // MARK: - Attributes
+    //-----------------------------------------------------------------------
+    // MARK: - attributes
+    //-----------------------------------------------------------------------
     
     static let shared = MovieManager()
     var favoritesMovies: [Movie] = []
     
+    //-----------------------------------------------------------------------
     // MARK: - Init
+    //-----------------------------------------------------------------------
     
     private init() { }
-    
-    // MARK: - Class methods
+
+    //-----------------------------------------------------------------------
+    // MARK: - class methods
+    //-----------------------------------------------------------------------
     
     func add(_ movie: Movie) {
         if favoritesMovies.contains(where: { $0.id == movie.id }) {
@@ -33,4 +39,5 @@ class MovieManager {
             favoritesMovies.remove(at: index)
         }
     }
+
 }

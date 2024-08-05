@@ -1,37 +1,58 @@
 //
-//  FavoriteMoviesViewController.swift
-//  Cinetopia
+//   FavoriteMoviesViewController
+//   Cinetopia
 //
-//  Created by ALURA on 24/11/23.
+//   Created by Guilherme Golfetto on 02/08/2024
 //
+
 
 import UIKit
 
 class FavoriteMoviesViewController: UIViewController {
     
-    // MARK: - UI Components
+    //-----------------------------------------------------------------------
+    // MARK: - Subviews
+    //-----------------------------------------------------------------------
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 20, left: 27, bottom: 10, right: 27)
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: layout
+        )
+        
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(FavoriteMovieCollectionViewCell.self, forCellWithReuseIdentifier: "FavoriteMovieCollectionViewCell")
-        collectionView.register(FavoriteCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "FavoriteCollectionReusableView")
+        
+        //registrar celula
+        collectionView.register(
+            FavoriteMovieCollectionViewCell.self,
+            forCellWithReuseIdentifier: "FavoriteMovieCollectionViewCell"
+        )
+        
+        //isso serve para registrar uma view customizada como header da collectionview
+        collectionView.register(
+            FavoriteCollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "FavoriteCollectionReusableView"
+        )
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         return collectionView
     }()
     
-    // MARK: - View life cycle
+    //-----------------------------------------------------------------------
+    // MARK: - View lifecycle
+    //-----------------------------------------------------------------------
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
         view.backgroundColor = .background
-        setupConstraints()
+        
+        setupContraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,19 +60,25 @@ class FavoriteMoviesViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    // MARK: - Class methods
+    //-----------------------------------------------------------------------
+    // MARK: - private methods
+    //-----------------------------------------------------------------------
     
-    private func setupConstraints() {
+    private func setupContraints() {
         view.addSubview(collectionView)
+        
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-    
 }
+
+//-----------------------------------------------------------------------
+// MARK: - UICollectionViewDataSource
+//-----------------------------------------------------------------------
 
 extension FavoriteMoviesViewController: UICollectionViewDataSource {
     
@@ -61,20 +88,26 @@ extension FavoriteMoviesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteMovieCollectionViewCell", for: indexPath) as? FavoriteMovieCollectionViewCell else {
-            fatalError("error to create FavoriteMovieCollectionViewCell")
+            fatalError("error to create cell")
         }
         
-        let currentMovie = MovieManager.shared.favoritesMovies[indexPath.item]
-        cell.setupView(currentMovie)
+        let movie = MovieManager.shared.favoritesMovies[indexPath.item]
+        cell.setupView(movie)
         cell.delegate = self
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
         if kind == UICollectionView.elementKindSectionHeader {
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FavoriteCollectionReusableView", for: indexPath) as? FavoriteCollectionReusableView else {
-                fatalError("error to create collectionview header")
+            
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "FavoriteCollectionReusableView",
+                for: indexPath
+            ) as? FavoriteCollectionReusableView else {
+                fatalError("error to create collectionView header")
             }
             
             headerView.setupTitle("Meus filmes favoritos")
@@ -87,36 +120,41 @@ extension FavoriteMoviesViewController: UICollectionViewDataSource {
 }
 
 extension FavoriteMoviesViewController: UICollectionViewDelegateFlowLayout {
+    
+    //isso serve para definir o tamanho da collectionview
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/3, height: 200)
+        return CGSize(width: collectionView.frame.width / 3, height: 200)
     }
     
+    //isso serve para definir o tamanho do header
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 50)
     }
 }
 
 extension FavoriteMoviesViewController: FavoriteMovieCollectionViewCellDelegate {
+    
     func didSelectFavoriteButton(_ sender: UIButton) {
         
-        guard let cell = sender.superview as? FavoriteMovieCollectionViewCell else {
-            return
-        }
+        guard let cell = sender.superview as? FavoriteMovieCollectionViewCell else { return }
         
-        guard let indexPath = collectionView.indexPath(for: cell) else {
-            return
-        }
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         
         let selectedMovie = MovieManager.shared.favoritesMovies[indexPath.item]
         selectedMovie.changeSelectionStatus()
         
         MovieManager.shared.remove(selectedMovie)
+        
         collectionView.reloadData()
     }
+    
 }
+
+//-----------------------------------------------------------------------
+// MARK: - Preview
+//-----------------------------------------------------------------------
+
 
 #Preview {
     FavoriteMoviesViewController()
 }
-
-

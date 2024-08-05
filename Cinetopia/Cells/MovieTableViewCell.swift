@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 protocol MovieTableViewCellDelegate: AnyObject {
-    func didSelectFavoriteButton(sender: UIButton)
+    func didSelectFavoriteButton(sender: UIButton) //para o viewcontroller saber que teve o click
 }
 
 class MovieTableViewCell: UITableViewCell {
@@ -50,7 +50,7 @@ class MovieTableViewCell: UITableViewCell {
         return button
     }()
     
-    weak var delegate: MovieTableViewCellDelegate?
+    weak var delegate: MovieTableViewCellDelegate? //precisa ser weak para não ter retain cycle ja que existe essa ligação com ViewController
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -69,6 +69,7 @@ class MovieTableViewCell: UITableViewCell {
         movieTitleLabel.text = movie.title
         movieReleaseDateLabel.text = "Lançamento: \(movie.releaseDate)"
         
+        //para controlar o icone do botao de favoritar
         let heart = UIImage(systemName: "heart")?.withTintColor(.buttonBackground, renderingMode: .alwaysOriginal)
         let heartFill = UIImage(systemName: "heart.fill")?.withTintColor(.buttonBackground, renderingMode: .alwaysOriginal)
         
@@ -83,7 +84,7 @@ class MovieTableViewCell: UITableViewCell {
         addSubview(moviePosterImageView)
         addSubview(movieTitleLabel)
         addSubview(movieReleaseDateLabel)
-        contentView.addSubview(favoriteButton)
+        contentView.addSubview(favoriteButton) // para ele ficar acima dos elemento da tela, e não disparar o click da view toda
     }
     
     private func setupConstraints() {
@@ -122,7 +123,8 @@ class MovieTableViewCell: UITableViewCell {
     
     @objc
     func didTapFavoriteButton(sender: UIButton) {
-        delegate?.didSelectFavoriteButton(sender: sender)
+        delegate?.didSelectFavoriteButton(sender: sender) //notificar o viewcontroller que teve o click, por isso o delegate
+        //sender é o objeto q quero mandar pro proximo, pode ser ele mesmo
     }
     
 }

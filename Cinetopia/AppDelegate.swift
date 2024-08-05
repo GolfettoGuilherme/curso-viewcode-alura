@@ -10,10 +10,9 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        //isso serve para aplicar essas configurações para todo o app e corrigir a tabbar do app pra ficar da cor certa
         let tabBarApperance = UITabBarAppearance()
         tabBarApperance.configureWithOpaqueBackground()
         tabBarApperance.backgroundColor = .tabBarBackground
