@@ -26,7 +26,16 @@ class TabBarController: UITabBarController {
     //-----------------------------------------------------------------------
 
     private func setupTabBarController() {
-        let homeVC = UINavigationController(rootViewController: MoviesViewController())
+        
+        let view = MoviesView()
+        let interactor = MoviesInteractor()        
+        let presenter = MoviesPresenter(view: view, interactor: interactor)
+        
+        let homeVC = UINavigationController(rootViewController: MoviesViewController(
+            mainView: view,
+            presenter: presenter
+        ))
+        
         let symbolConfiguration = UIImage.SymbolConfiguration(scale: .medium)
         
         let homeSymbol = UIImage(systemName: "film", withConfiguration: symbolConfiguration)
